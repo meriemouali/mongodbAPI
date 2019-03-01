@@ -1,0 +1,22 @@
+{
+  "name": "mongodbapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meriemouali/mongodbAPI.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/meriemouali/mongodbAPI/issues"
+  },
+  "homepage": "https://github.com/meriemouali/mongodbAPI#readme",
+  "dependencies": {
+    "mongoose": "^5.4.16"
+  }
+}
