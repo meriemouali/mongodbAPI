@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+/*const mongoose = require('mongoose')
 mongoose.Promise = global.Promise
 
 before(function(done){
@@ -12,4 +12,4 @@ mongoose.connection.once('open',function(){
 }).on('error',function(error){
     console.log("connection",error)
 })
-})
+})*/

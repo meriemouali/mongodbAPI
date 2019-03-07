@@ -4,8 +4,9 @@ const Schema = mongoose.Schema;
 // Create a Schema and a Model
 
 const BookSchema = new Schema({
+    _id:mongoose.Types.ObjectId,
     title: String,
-    pages: Number
+    
 });
 
 /*const AuthorSchema = new Schema({

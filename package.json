@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -17,8 +18,13 @@
   },
   "homepage": "https://github.com/meriemouali/mongodbAPI#readme",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "mocha": "^6.0.2",
-    "mongoose": "^5.4.16"
+    "mongoose": "^5.4.16",
+    "morgan": "^1.9.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
   }
 }
