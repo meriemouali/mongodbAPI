@@ -3,12 +3,14 @@ const express = require ("express")
 const morgan = require ('morgan')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
+mongoose.Promise = global.Promise
 
 
 
 
 const app = express ();
 const bookroutes = require("./routes/book")
+const authorroutes = require("./routes/author")
 
 
 mongoose.connect('mongodb://localhost/books',{ useNewUrlParser: true })
@@ -27,6 +29,7 @@ app.use(morgan('dev'))
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
 app.use('/books',bookroutes)
+app.use('/authors',authorroutes)
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header(
