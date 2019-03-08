@@ -2,12 +2,12 @@
 const express = require('express');
 const mongoose = require('mongoose')
 const router = express.Router();
-const book = require("../models/book")
+const Book = require("../models/book")
 
 
 router.get('/',(req,res,next)=>{
     
-    book.find()
+    Book.find()
     .exec()
     .then(docs=>{console.log(docs)
     res.status(200).json(docs)})
@@ -39,38 +39,38 @@ router.get('/',(req,res,next)=>{
     })
 })*/
 router.post("/", (req, res, next) => {
-    const book = new book({
+    const book = new Book({
         _id : new mongoose.Types.ObjectId(),
-        title : req.body.title,
+        title : req.body.title
         
     });
-    book
-      .save()
-      .then(result => {
+    book.save().then(result => {
         console.log(result);
         res.status(201).json({
           message: "Handling POST requests to /books",
           createdbook:result
         });
+        console.log(result)
       })
-      .catch(err => {
-        console.log("erreur de post :",err);
-        res.status(505).json({
-          error: err
-         
-        });
-      });
-      res.status(200).json({
-        message:"HANDLING post REQUEST FOR /books",
-        createdbook : book
-    })
+      .catch(err => { console.log("erreur de post :",err);
+      res.status(505).json({
+          error:err
+       
+      });}
+       
+      );
+      /*res.status(201).json({
+          message:"handle post request",
+          createdbook : book
+      })*/
+     
   });
 
 
 router.get('/:bookId',(req,res,next)=>{
 
     const id = req.params.bookId;
-    book.findById(id).exec().then(doc=>{
+    Book.findById(id).exec().then(doc=>{
         res.status(200).json({doc
            
         })
@@ -88,21 +88,22 @@ router.get('/:bookId',(req,res,next)=>{
 
 router.delete("/:bookId",(req,res,next)=>{
     const id =req.params.bookId;
-    book.remove({_id:id})
+    Book.remove({_id:id})
     .exec()
     .then(result=>{res.status(200).json(result)})
     .catch(err=>{console.log(err)
     res.status(500).json({error:err})})
 })
+
 router.patch("/:bookId",(req,res,next)=>{
     const id = req.params.bookId
     const updateOps={};
     for(const ops of req.body){
         updateOps[ops.propName] = ops.value
     }
-    book.update({_id:id},{$set : updateOps})
+    Book.update({_id:id},{$set : updateOps})
     .exec()
-    then(result=>{console.log(result);
+    .then(result=>{console.log(result);
     res.status(200).json(result)})
     .catch(err=>{console.log(err);
     res.status(500).json({error: err})});
