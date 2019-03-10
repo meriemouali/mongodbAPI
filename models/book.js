@@ -1,10 +1,9 @@
-
-  
 const mongoose = require('mongoose');
 
 const bookSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    title: {type:String, required:true}
+    title: {type:String, required:true},
+    bookImage:{type:String, required:true}
     
 });
 

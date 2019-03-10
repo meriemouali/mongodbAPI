@@ -11,6 +11,7 @@ mongoose.Promise = global.Promise
 const app = express ();
 const bookroutes = require("./routes/book")
 const authorroutes = require("./routes/author")
+const userroutes = require ("./routes/user")
 
 
 mongoose.connect('mongodb://localhost/books',{ useNewUrlParser: true })
@@ -23,13 +24,14 @@ mongoose.connection.once('open',function(){
     console.log("connection",error)
 })
 
-
+app.use('/uploads',express.static('uploads'))
 app.use(morgan('dev'))
 
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
 app.use('/books',bookroutes)
 app.use('/authors',authorroutes)
+app.use('/users',userroutes)
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header(

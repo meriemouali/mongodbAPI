@@ -3,17 +3,38 @@ const express = require('express');
 const mongoose = require('mongoose')
 const router = express.Router();
 const Book = require("../models/book")
+const multer = require ("multer")
+
+const storage = multer.diskStorage({
+    destination: function(req,file,cb){
+        cb(null,'./uploads')
+    },
+    filename :function(req,file,cb){
+        cb(null,new Date().toISOString()+ file.originalname)
+    }
+})
+const fileFilter = (req,file,cb)=>{
+    if(file.mimetype ==='image/jpeg' || file.mimetype ==='image/png')
+{
+    cb(null,true)
+} else {
+    cb(null,false)
+}
+}
+const upload = multer({ storage:storage,limits:{fileSize:1024*1024*5},fileFilter:fileFilter})
+const checkAuth = require('../middleware/check-auth');
 
 
 router.get('/',(req,res,next)=>{
     
     Book.find()
-    .select('title _id')
+    .select('title _id bookImage')
     .exec()
     .then(docs=>{
         const response ={
             count : docs.length,
-            books:docs.map(doc=>{return{title:doc.title,_id:doc._id,request:{type:'GET',url:'http://localhost:3000/books/'+doc._id}}})
+            books:docs.map(doc=>{return{
+                title:doc.title,_id:doc._id,bookImage:doc.bookImage,request:{type:'GET',url:'http://localhost:3000/books/'+doc._id}}})
         }
     res.status(200).json(response)})
     .catch(err=>{console.log(err)
@@ -43,10 +64,12 @@ router.get('/',(req,res,next)=>{
         createdbook : book
     })
 })*/
-router.post("/", (req, res, next) => {
+router.post("/",upload.single("bookImage"),checkAuth, (req, res, next) => {
+    console.log(req.file)
     const book = new Book({
         _id : new mongoose.Types.ObjectId(),
-        title : req.body.title
+        title : req.body.title,
+        bookImage:req.file.path
         
     });
     book.save().then(result => {
