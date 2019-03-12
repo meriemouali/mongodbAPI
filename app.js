@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 mongoose.Promise = global.Promise
 
+var cors = require('cors');
 
 
 
@@ -23,7 +24,7 @@ mongoose.connection.once('open',function(){
 }).on('error',function(error){
     console.log("connection",error)
 })
-
+app.use(cors());
 app.use('/uploads',express.static('uploads'))
 app.use(morgan('dev'))
 
